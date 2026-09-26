@@ -162,6 +162,8 @@
   .book .row { display: flex; flex-wrap: wrap; gap: 16px 40px; align-items: center; justify-content: space-between; }
   .book p { max-width: 68ch; margin: 0; font-size: 14px; line-height: 1.6; text-wrap: balance; }
   .book .btn { background: var(--on-accent); color: var(--accent); font-size: 13px; padding: 14px 22px; }
+  .book-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+  .book-email { user-select: all; opacity: .8; }
   .book .btn:hover { background: var(--grey-1); color: var(--ink); }
   .services { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
   .services li { border: 1px solid currentColor; padding: 6px 10px; }
@@ -297,7 +299,10 @@
       <h2>Let’s make<br>something.</h2>
       <div class="row">
         <p>Taking on product, campaign and portrait work in LA and remote. Tell me about the project, the timeline and where the images will run.</p>
-        <a class="btn" href="https://www.terrence-williams.com/booking" target="_blank" rel="noopener">Start a booking →</a>
+        <div class="book-cta">
+          <a class="btn" href="mailto:twmediacompany@gmail.com?subject=Booking%20inquiry">Start a booking →</a>
+          <span class="mono book-email">twmediacompany@gmail.com</span>
+        </div>
       </div>
       <ul class="services mono">
         <li>Product / E-comm</li><li>Campaigns</li><li>Lookbooks</li><li>Portraits</li><li>Art direction</li>
