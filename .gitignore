@@ -1,0 +1,32 @@
+# Full-resolution originals stay on this Mac; the site only uses the web/ copies in these folders.
+/headshot/*
+!/headshot/web/
+/shots/aj4-oreo/*
+!/shots/aj4-oreo/web/
+/shots/bnyx-greatest/*
+!/shots/bnyx-greatest/web/
+/shots/doaf-am95/*
+!/shots/doaf-am95/web/
+/shots/naacp-awards/*
+!/shots/naacp-awards/web/
+/shots/nam/*
+!/shots/nam/web/
+/shots/offduty/*
+!/shots/offduty/web/
+/shots/otis-kane/*
+!/shots/otis-kane/web/
+/shots/pov/*
+!/shots/pov/web/
+/shots/pusha-t/*
+!/shots/pusha-t/web/
+/shots/stablefaith/*
+!/shots/stablefaith/web/
+/shots/tfla-shopify/*
+!/shots/tfla-shopify/web/
+
+# Bridge / Finder / tooling files
+.DS_Store
+.BridgeSort
+.BridgeSort.bak
+.rename_map.tsv
+.claude/
