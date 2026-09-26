@@ -456,9 +456,14 @@
     </button>`).join("");
 
 
-  const clients = ["NikeSKIMS", "Flight Club", "GOAT", "ASAP Nast", "Comme des Garçons", "round21"];
+  const clients = ["NikeSKIMS", "GOAT", "Flight Club", "Shopify", "Moncler", "Sephora", "point of view", "Ducks of a Feather", "NAACP", "round21"];
   const once = clients.map(c => `<span>${c}</span><span class="dot">●</span>`).join("");
   document.getElementById("track").innerHTML = once + once;
+  // Keep the client strip at a steady speed (~56px/s) however many names it holds.
+  const track = document.getElementById("track");
+  const pace = () => { track.style.animationDuration = (track.scrollWidth / 2 / 56) + "s"; };
+  pace();
+  document.fonts && document.fonts.ready.then(pace);
 
   // filters
   let visible = projects.map((_, k) => k);
