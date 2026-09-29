@@ -70,7 +70,8 @@
     border: 0; cursor: pointer; transition: background .2s;
   }
   .btn:hover { background: var(--ink-soft); color: var(--on-accent); }
-  @media (max-width: 560px) { nav .hide-sm { display: none; } }
+  nav .show-sm { display: none; }
+  @media (max-width: 560px) { nav .hide-sm { display: none; } nav .show-sm { display: block; } }
 
   /* ---------- hero ---------- */
   .hero { padding-block: clamp(28px, 5vw, 64px) clamp(20px, 2.5vw, 36px); }
@@ -228,8 +229,9 @@
     <nav aria-label="Primary">
       <ul>
         <li><a class="mono" href="#work">Work</a></li>
-        <li class="hide-sm"><a class="mono" href="#about">About</a></li>
-        <li><a class="btn" href="#book">Book a shoot</a></li>
+        <li><a class="mono" href="#about">About</a></li>
+        <li class="show-sm"><a class="mono" href="#book">Contact</a></li>
+        <li class="hide-sm"><a class="btn" href="#book">Book a shoot</a></li>
       </ul>
     </nav>
   </div>
@@ -252,8 +254,8 @@
       <div class="head">
         <h2>Selected work<sup id="count">28</sup></h2>
         <div class="filters" role="group" aria-label="Filter projects">
-          <button type="button" id="f-all" data-f="all" aria-pressed="false">All</button>
-          <button type="button" id="f-product" data-f="Product" aria-pressed="true">Product</button>
+          <button type="button" id="f-all" data-f="all" aria-pressed="true">All</button>
+          <button type="button" id="f-product" data-f="Product" aria-pressed="false">Product</button>
           <button type="button" id="f-portrait" data-f="Portrait" aria-pressed="false">Portrait</button>
           <button type="button" id="f-editorial" data-f="Editorial" aria-pressed="false">Editorial</button>
           <button type="button" id="f-event" data-f="Event" aria-pressed="false">Event</button>
@@ -398,10 +400,10 @@
     { t: "Brianna", c: "Personal", cat: "Portrait", s: "brianna", n: 5, cover: 1, coverSrc: "img/172594329095.jpg" },
   ];
   const isVideo = src => /\.(mp4|mov|webm)$/i.test(src);
-  // Grid cards and the viewer's thumbnail row use small 800px copies in shots/<slug>/thumb/;
+  // The viewer's thumbnail row uses small 800px copies in shots/<slug>/thumb/, grid cards use thumb/cover.jpg;
   // the full-size file is only loaded for the main slideshow image.
   const thumb = (slug, n) => `shots/${slug}/thumb/${shot(slug, n).split("/").pop().replace(/\.[^.]+$/, "")}.jpg`;
-  const coverOf = p => p.coverSrc || thumb(p.s, p.cover);
+  const coverOf = p => `shots/${p.s}/thumb/cover.jpg`;   // 1400px-tall card image, built from the cover frame (or coverSrc)
   const pad = n => String(n).padStart(2, "0");
 
   // Size "Terrence" so it spans exactly the same width as "Williams".
@@ -445,7 +447,7 @@
     document.getElementById("count").textContent = visible.length;
   }
   document.querySelectorAll(".filters button").forEach(b => b.addEventListener("click", () => applyFilter(b.dataset.f)));
-  applyFilter("Product");   // category shown when the page loads
+  applyFilter("all");   // category shown when the page loads
 
   // shoot viewer
   const lb = document.getElementById("lb");
