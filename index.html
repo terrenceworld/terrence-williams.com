@@ -89,15 +89,6 @@
   .hero-meta p { margin: 0; }
   .hero-meta .lede { font-size: clamp(15px, 1.2vw, 17px); line-height: 1.45; max-width: 64ch; text-wrap: balance; }
 
-  .strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: clamp(24px, 3vw, 36px); }
-  .strip figure { margin: 0; position: relative; aspect-ratio: 4/5; overflow: hidden; background: var(--paper-2); }
-  .strip img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
-  .strip figure:hover img { transform: scale(1.04); }
-  .strip-open { all: unset; display: block; width: 100%; height: 100%; cursor: pointer; }
-  .strip-open:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
-  .strip figcaption { position: absolute; left: 8px; bottom: 8px; color: #fff; mix-blend-mode: difference; }
-  .strip-caption { display: flex; justify-content: space-between; gap: 12px; margin-top: 10px; color: var(--ink-soft); flex-wrap: wrap; }
-  @media (max-width: 640px) { .strip { grid-template-columns: repeat(2, 1fr); } }
 
   /* ---------- section heads ---------- */
   section.block { padding-block: clamp(48px, 7vw, 96px); border-top: 1px solid var(--rule); }
@@ -159,7 +150,7 @@
   .clients span { font-family: var(--display); font-weight: 800; font-stretch: 125%; text-transform: uppercase; font-size: clamp(22px, 3vw, 36px); white-space: nowrap; }
   .clients span.dot { color: var(--grey-2); }
   @keyframes slide { to { transform: translateX(-50%); } }
-  @media (prefers-reduced-motion: reduce) { .clients .track { animation: none; flex-wrap: wrap; width: auto; } .card img, .strip img { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .clients .track { animation: none; flex-wrap: wrap; width: auto; } .card img { transition: none; } }
 
   /* ---------- booking ---------- */
   .book { background: var(--accent); color: var(--on-accent); }
@@ -250,13 +241,6 @@
       <h1 class="name"><span class="first">Terrence</span><span class="second">Williams</span></h1>
       <div class="hero-meta">
         <p class="lede">Photographer and art director based in Los Angeles, creating imagery across fashion, footwear, and contemporary culture.</p>
-      </div>
-      <div>
-        <div class="strip" id="strip"></div>
-        <div class="strip-caption mono">
-          <span id="latest-caption"></span>
-          <a href="#work">See all work ↓</a>
-        </div>
       </div>
     </div>
   </section>
@@ -359,7 +343,7 @@
     return p && p.files ? `shots/${slug}/${p.files[n - 1]}` : `shots/${slug}/${String(n).padStart(2, "0")}.jpg`;
   };
 
-  // Newest shoot goes first: it leads the Work grid and fills the "Latest" strip on the home page.
+  // Order here is the order of the Work grid.
   // Optional `crop` sets where the Work grid card's 4:5 crop sits in the photo (CSS object-position, e.g. "50% 85%" keeps feet in frame).
   // `cover` is the frame used on the index card.
   const projects = [
@@ -426,22 +410,6 @@
   matchName();
   document.fonts && document.fonts.ready.then(matchName);
   addEventListener("resize", matchName);
-
-  // "Latest" strip: up to four frames of the newest shoot, starting from its cover.
-  const latest = projects[0];
-  const latestFrames = Array.from({ length: Math.min(4, latest.n) }, (_, k) => (latest.cover - 1 + k) % latest.n + 1);
-  const strip = document.getElementById("strip");
-  strip.style.gridTemplateColumns = latestFrames.length < 4 ? `repeat(${latestFrames.length}, 1fr)` : "";
-  strip.innerHTML = latestFrames.map((n, k) =>
-    `<figure><button class="strip-open" type="button" data-f="${n}" aria-label="Open ${latest.t}, image ${n}"><img src="${shot(latest.s, n)}" alt="" ${k > 1 ? 'loading="lazy"' : ""}></button><figcaption class="mono">${pad(n)}A</figcaption></figure>`
-  ).join("");
-  document.getElementById("latest-caption").textContent = "Latest: " + (latest.t.includes(latest.c) ? latest.t : `${latest.t} / ${latest.c}`);
-  strip.addEventListener("click", e => {
-    const b = e.target.closest(".strip-open"); if (!b) return;
-    lastFocus = b; lb.hidden = false; document.body.style.overflow = "hidden";
-    openShoot(0, +b.dataset.f);
-    $("lb-close").focus();
-  });
 
   const grid = document.getElementById("grid");
   grid.innerHTML = projects.map((p, k) => `
