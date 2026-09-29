@@ -398,7 +398,10 @@
     { t: "Brianna", c: "Personal", cat: "Portrait", s: "brianna", n: 5, cover: 1, coverSrc: "img/172594329095.jpg" },
   ];
   const isVideo = src => /\.(mp4|mov|webm)$/i.test(src);
-  const coverOf = p => p.coverSrc || shot(p.s, p.cover);
+  // Grid cards and the viewer's thumbnail row use small 800px copies in shots/<slug>/thumb/;
+  // the full-size file is only loaded for the main slideshow image.
+  const thumb = (slug, n) => `shots/${slug}/thumb/${shot(slug, n).split("/").pop().replace(/\.[^.]+$/, "")}.jpg`;
+  const coverOf = p => p.coverSrc || thumb(p.s, p.cover);
   const pad = n => String(n).padStart(2, "0");
 
   // Size "Terrence" so it spans exactly the same width as "Williams".
@@ -457,7 +460,7 @@
     thumbs.innerHTML = Array.from({ length: p.n }, (_, i) =>
       isVideo(shot(p.s, i + 1))
         ? `<button type="button" data-f="${i + 1}" aria-label="Video ${i + 1}"><video src="${shot(p.s, i + 1)}#t=0.1" muted playsinline preload="metadata"></video><span class="play" aria-hidden="true">▶</span></button>`
-        : `<button type="button" data-f="${i + 1}" aria-label="Image ${i + 1}"><img src="${shot(p.s, i + 1)}" alt="" loading="lazy"></button>`).join("");
+        : `<button type="button" data-f="${i + 1}" aria-label="Image ${i + 1}"><img src="${thumb(p.s, i + 1)}" alt="" loading="lazy"></button>`).join("");
     const nk = visible[(visible.indexOf(k) + 1) % visible.length];
     $("lb-next-shoot").innerHTML = `Next shoot →<small>${projects[nk].t}</small>`;
     showFrame(startFrame);

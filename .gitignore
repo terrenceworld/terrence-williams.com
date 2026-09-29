@@ -26,6 +26,9 @@
 /shots/tfla-shopify/*
 !/shots/tfla-shopify/web/
 
+# ...plus the small thumbnail copies used by the grid and slideshow thumbnail row
+!/shots/*/thumb/
+
 # Bridge / Finder / tooling files
 .DS_Store
 .BridgeSort
