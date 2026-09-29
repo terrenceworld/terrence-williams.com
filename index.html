@@ -118,7 +118,7 @@
   .filters button:hover:not([aria-pressed="true"]) { background: var(--paper-2); }
 
   /* ---------- index grid ---------- */
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: clamp(20px, 2.4vw, 32px) clamp(12px, 1.6vw, 20px); }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(28px, 3vw, 48px) clamp(16px, 2vw, 28px); }
   .card { all: unset; cursor: pointer; display: flex; flex-direction: column; gap: 10px; }
   .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
   .card .ph { aspect-ratio: 4/5; overflow: hidden; background: var(--paper-2); position: relative; }
@@ -130,15 +130,9 @@
   .card .cat { color: var(--ink-soft); }
   .card .client { color: var(--ink-soft); grid-column: 1 / -1; }
   .card[hidden] { display: none !important; }
-  /* Phones: two columns, compact card text */
+  /* Phones: one column */
   @media (max-width: 640px) {
-    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 10px; }
-    .card { gap: 8px; }
-    .card .meta { grid-template-columns: 1fr; gap: 2px; }
-    .card .title { font-size: 14px; }
-    .card .cat, .card .client { font-size: 10px; }
-    .card .frame { top: 6px; left: 6px; font-size: 10px; }
-    .card .count-tag { display: none; }
+    .grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
     /* Filters: all categories on a single row */
     .head .filters { width: 100%; flex-wrap: nowrap; gap: 4px; overflow-x: auto; scrollbar-width: none; }
     .head .filters::-webkit-scrollbar { display: none; }
